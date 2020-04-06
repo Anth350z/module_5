@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html >
+  <head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  </head>
+  <body>
+
+    <div class="container">
+    <h2>CUNY-Data 608</h2>
+    <h3>Anthony Munoz</h3>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#PartA" style='font-size: 200%;'>Part A</a></li>
+      <li><a href="#PartB" style='font-size: 200%;'>Part B</a></li>
+      <li><a href="#PartC" style='font-size: 200%;'>Part C</a></li>
+    </ul>
+
+
+<div class="tab-content">
+  <div id="PartA" class="tab-pane fade in active">
+     <h1>Word Inveter</h1>
+     <label >Enter Word</label>
+     <input type="text" id="word" > <br><br>
+     <h3>Invetered Word: </h3> <div id="output" style="color: green;
+  font-size: 200%;"></div>
+  </div>
+
+
+  <div id="PartB" class="tab-pane fade">
+     <h1>Multiples Number</h1>
+     <label >Enter a Number</label>
+     <input type="number" id="number" > <br><br>
+     <div id="table_number" style="width: 100%;"> </div>
+  </div>
+
+
+
+  <div id="PartC"class="tab-pane fade">
+    <table id="table_id" class="display" style="width:100%">
+      <thead>
+          <tr>
+            <th>Name</th>
+            <th>Heigth</th>
+            <th>Weigth</th>
+          </tr>
+        </thead>
+      </table>
+   </div>
+
+
+</div>
+</div>
+
+
+</body>
+
+  <script>
+    $(document).ready(function(){
+      $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+      });
+    });
+
+// Function for the Part A
+  word.oninput = function() {
+        output.innerHTML = word.value.split('').reverse().join('');
+      };
+
+
+
+//Function for the Part B
+
+$('#number').keyup(function(){
+  var suma =  ' ';
+  var count = 1;
+  var numero = number.value;
+       suma += '<table class="table table-striped table-hover"  style="width: 10%;" >'
+     for (var i=0; i < 5; i++) {
+      suma += "<tr>"
+      for(var j=0; j<4; j++) {
+       suma += "<td style='width: 100%;font-size: 200%;' > "+(numero*count)+"</td>"
+       count++;
+       }
+      suma += "</tr>"
+     }
+     suma += '</table>'
+     if (numero)
+     $('#table_number').html(suma);
+     else {
+     $('#table_number').empty();
+     }
+  } )
+
+
+
+
+// Part C
+var dat = new XMLHttpRequest();
+var data = new Array();
+dat.open("GET", "https://raw.githubusercontent.com/Anth350z/module_5/master/presidents.csv", false);
+dat.send(null);
+var all_data = dat.responseText.split(/\n/);
+
+for (var i = 1; i < all_data.length -1; i++) {
+  data.push({'name':all_data[i].split(',')[0],'heigth':all_data[i].split(',')[1],'weigth':all_data[i].split(',')[2]});
+}
+
+
+
+$('#table_id').DataTable( {
+         data: data,
+         "columns": [
+            { "data": "name" },
+            { "data": "heigth" },
+            { "data": "weigth" }
+
+        ]
+
+
+     } );
+
+
+  </script>
+</html>
+
+
+
+<!--
+References Sources:
+https://datatables.net/
+https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_tab_js&stacked=h
+ -->
